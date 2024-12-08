@@ -1,11 +1,47 @@
-use mysql::*;
 use mysql::prelude::*;
+use mysql::*;
+use std::fs;
+use std::io;
 
 fn main() -> Result<()> {
-    let url = "mysql://root:viu@localhost:3306";
-    let pool = Pool::new(url)?;
-    let mut conn = pool.get_conn()?;
-    let version: Option<String> = conn.query_first("SELECT VERSION()")?;
-    println!("MySQL version: {:?}", version);
+    let mut conn1 = connect("")?;
+    execute(&mut conn1, "DROP DATABASE IF EXISTS park", ())?;
+    execute(&mut conn1, "CREATE DATABASE park", ())?;
+    let mut conn2 = connect("park")?;
+    execute(&mut conn2, &read_sql_file("create_tables.sql")?, ())?;
+    Ok(())
+}
+
+fn connect(database: &str) -> Result<PooledConn, mysql::Error> {
+    let url = if database.is_empty() {
+        "mysql://root:viu@localhost:3306".to_string()
+    } else {
+        format!("mysql://root:viu@localhost:3306/{}", database)
+    };
+    let pool = Pool::new(Opts::from_url(&url)?)?;
+    let conn = pool.get_conn()?;
+    Ok(conn)
+}
+
+fn read_sql_file(path: &str) -> io::Result<String> {
+    fs::read_to_string(path)
+}
+
+fn execute(
+    conn: &mut PooledConn,
+    sql: &str,
+    params: impl Into<Params>,
+) -> Result<(), mysql::Error> {
+    println!("Executing query: {}", sql);
+    let mut result = conn.exec_iter(sql, params)?;
+    if let Some(Ok(_row)) = result.next() {
+        println!("Query result:");
+        for row_result in result {
+            let row: Row = row_result?;
+            println!("{:?}", row);
+        }
+    } else {
+        println!("Rows affected: {}", result.affected_rows());
+    }
     Ok(())
 }
