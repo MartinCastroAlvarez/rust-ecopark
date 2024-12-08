@@ -8,7 +8,8 @@ fn main() -> Result<()> {
     execute(&mut conn1, "DROP DATABASE IF EXISTS park", ())?;
     execute(&mut conn1, "CREATE DATABASE park", ())?;
     let mut conn2 = connect("park")?;
-    execute(&mut conn2, &read_sql_file("create_tables.sql")?, ())?;
+    execute_file(&mut conn2, "create_tables.sql")?;
+    execute_file(&mut conn2, "create_instances.sql")?;
     Ok(())
 }
 
@@ -42,6 +43,20 @@ fn execute(
         }
     } else {
         println!("Rows affected: {}", result.affected_rows());
+    }
+    Ok(())
+}
+
+fn execute_file(conn: &mut PooledConn, path: &str) -> Result<(), mysql::Error> {
+    let sql = read_sql_file(path)?;
+    let statements: Vec<&str> = sql
+        .split(';')
+        .map(|stmt| stmt.trim())
+        .filter(|stmt| !stmt.is_empty())
+        .collect();
+    for statement in statements {
+        println!("Executing statement: {}", statement);
+        execute(conn, statement, ())?;
     }
     Ok(())
 }
