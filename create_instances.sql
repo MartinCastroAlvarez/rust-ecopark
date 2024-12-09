@@ -48,29 +48,29 @@ INSERT INTO Staff (dni, salary, mobile_phone, social_security_id) VALUES
 ('dni-21', 11000.50, '555123456', 'SS123456'),
 ('dni-22', 12000.75, '555234567', 'SS234567');
 
-INSERT INTO Survey (calificacion, visitor_dni, date) VALUES
-(5, 'dni-1', '2024-12-01 10:30:00'),
-(4, 'dni-2', '2024-12-02 11:30:00'),
-(3, 'dni-3', '2024-12-03 12:30:00'),
-(2, 'dni-4', '2024-12-04 13:30:00'),
-(1, 'dni-5', '2024-12-05 14:30:00'),
-(5, 'dni-6', '2024-12-06 15:30:00'),
-(4, 'dni-7', '2024-12-07 16:30:00'),
-(3, 'dni-8', '2024-12-08 17:30:00'),
-(2, 'dni-9', '2024-12-09 18:30:00'),
-(1, 'dni-10', '2024-12-10 19:30:00'),
-(1, 'dni-6', '2024-11-06 15:30:00'),
-(3, 'dni-7', '2024-11-07 16:30:00'),
-(5, 'dni-8', '2024-11-08 17:30:00'),
-(3, 'dni-9', '2024-11-09 18:30:00'),
-(2, 'dni-10', '2024-11-10 19:30:00');
+INSERT INTO Hostel (category, capacity, name) VALUES
+(5, 50, 'Namekusei Hostel'),
+(4, 45, 'Saiyan Hostel'),
+(3, 40, 'Earth Hostel'),
+(2, 35, 'Vegeta Hostel'),
+(1, 30, 'Frieza Hostel');
 
-INSERT INTO Hostel (category, capacity) VALUES
-(5, 50),
-(4, 40),
-(3, 30),
-(2, 20),
-(1, 10);
+INSERT INTO Survey (score, visitor_dni, date, hostel_id) VALUES
+(5, 'dni-1', '2024-12-01 10:30:00', 1),
+(4, 'dni-2', '2024-12-02 11:30:00', 1),
+(3, 'dni-3', '2024-12-03 12:30:00', 1),
+(2, 'dni-4', '2024-12-04 13:30:00', 1),
+(1, 'dni-5', '2024-12-05 14:30:00', 3),
+(5, 'dni-6', '2024-12-06 15:30:00', 3),
+(4, 'dni-7', '2024-12-07 16:30:00', 3),
+(3, 'dni-8', '2024-12-08 17:30:00', 3),
+(2, 'dni-9', '2024-12-09 18:30:00', 3),
+(1, 'dni-10', '2024-12-10 19:30:00', 2),
+(1, 'dni-6', '2024-11-06 15:30:00', 2),
+(3, 'dni-7', '2024-11-07 16:30:00', 4),
+(5, 'dni-8', '2024-11-08 17:30:00', 4),
+(3, 'dni-9', '2024-11-09 18:30:00', 5),
+(2, 'dni-10', '2024-11-10 19:30:00', 5);
 
 INSERT INTO Booking (visitor_dni, hostel_id, beds, start_date, end_date) VALUES
 ('dni-1', 1, 1, '2024-12-01', '2024-12-05'),
@@ -138,6 +138,15 @@ INSERT INTO Vegetal (id, has_flowering, flowering_period) VALUES
 INSERT INTO Mineral (id, type) VALUES
 (6, 'ROCK'),
 (7, 'CRYSTAL');
+
+INSERT INTO Predator (predator_species_id, prey_species_id) VALUES
+(1, 4),
+(1, 6),
+(2, 1),
+(3, 2),
+(3, 1),
+(3, 3),
+(1, 3);
 
 INSERT INTO Population (zone_id, species_id, size) VALUES
 (1, 1, 50),

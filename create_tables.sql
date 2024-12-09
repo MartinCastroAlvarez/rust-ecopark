@@ -23,14 +23,16 @@ CREATE TABLE Staff (
 
 CREATE TABLE Survey (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    calificacion TINYINT NOT NULL CHECK (calificacion BETWEEN 1 AND 5),
+    score TINYINT NOT NULL CHECK (score BETWEEN 1 AND 5),
     visitor_dni VARCHAR(255) NOT NULL,
+    hostel_id INT NOT NULL,
     date DATETIME NOT NULL,
     FOREIGN KEY (visitor_dni) REFERENCES Visitor(dni)
 );
 
 CREATE TABLE Hostel (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
     category TINYINT NOT NULL CHECK (category BETWEEN 1 AND 5),
     capacity INT NOT NULL
 );

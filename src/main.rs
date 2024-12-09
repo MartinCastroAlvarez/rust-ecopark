@@ -10,6 +10,7 @@ fn main() -> Result<()> {
     let mut conn2 = connect("park")?;
     execute_file(&mut conn2, "create_tables.sql")?;
     execute_file(&mut conn2, "create_instances.sql")?;
+    execute_file(&mut conn2, "ask_questions.sql")?;
     Ok(())
 }
 
