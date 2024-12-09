@@ -59,11 +59,11 @@ LEFT JOIN Species ON Species.id = Predator.predator_species_id
 LEFT JOIN Species AS Prey ON Prey.id = Predator.prey_species_id
 WHERE Prey.name = 'Plant 1';
 
--- Given the 'Plant 1' species, how many of its predators are in the 'Saiyan Zone' zone?
+-- Given the 'Plant 1' species, how many of its predators are in the 'Namekusei Zone' zone?
 SELECT COUNT(DISTINCT Predator.predator_species_id)
 FROM Population
 LEFT JOIN Predator ON Predator.predator_species_id = Population.id
 LEFT JOIN Zone ON Zone.id = Population.zone_id
 LEFT JOIN Species AS Prey ON Prey.id = Predator.prey_species_id
 WHERE Prey.name = 'Plant 1'
-AND Zone.name = 'Saiyan Zone';
+AND Zone.name = 'Namekusei Zone';
